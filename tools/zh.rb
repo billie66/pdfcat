@@ -1,5 +1,10 @@
 #!/usr/bin/env ruby 
 # coding: utf-8
+#
+# Remove English text from the book. Basically I want to delete all
+# the lines only containing English characters, but I need to keep
+# some formatted lines for my book, so I use a few when clauses to
+# deal with exceptions.
 
 root = File.expand_path(File.dirname(__FILE__), '../book')
 outdir = File.join(root, 'zh')
@@ -18,7 +23,7 @@ Dir.glob("#{root}/*.md") do |file|
     case line 
     when /^---$/, /^layout: book$/, /^title:/, /^<div/, /<\/div>/
       out << line
-    when /<http:/, /^$/, /^\s{4}/, /<br \/>/
+    when /<http:/, /^$/, /^\s{2}/, /<br \/>/
       out << line 
     when /<img/, /class=\"figure\"/
       out << line 
