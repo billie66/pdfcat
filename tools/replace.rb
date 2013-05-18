@@ -30,14 +30,21 @@ def pre_markdown(string)
 		s /<ul>(.*?)<\/ul>/m do
 			t = $1.gsub(/<li><?p?>?(.*?)<?\/?p?>?<\/li>/m, '* \1')
 	  end
+		
+		# Delete <div> block
+		s /<div class="single">(.*?)<\/div>/m do
+		 t =	"---\n" << $1 << "---\n" 
+		end
 
-		# customize html table
+	  s(/<\/?h3>/, '**').gsub!(/<\/?p>/, "\n")
+
+		# Remove html table
 		s /<table ?.*?>(.*?)<\/table>/m do
-			t = $1.gsub(/<\/t[dh]>\n<t[dh] ?.*?>/, ' %% ')
+			t = $1.gsub(/<\/t[dh]>\n<t[dh] ?.*?>/, ' <==> ')
 			t = t.gsub(/<caption ?.*?>(.*?)<\/caption>/, 'caption: \1').
- 				    gsub(/<th ?.*?>(.*?)<\/th>/, 'th: \1').
-						gsub(/<td ?.*?>(.*?)<\/td>/m, 'td: \1').
-						gsub(/<.*?>\n?/, '')
+					gsub(/<th ?.*?>(.*?)<\/th>/, 'th: \1').
+					gsub(/<td ?.*?>(.*?)<\/td>/m, 'td: \1').
+					gsub(/<.*?>\n?/, '')
 			end
 	end	
 end
