@@ -4,6 +4,10 @@
 #Here is a good way to search and substitute some substrings of a big string. 
 #The idea is from progit.
 
+require 'fileutils'
+
+include FileUtils
+
 here = File.expand_path(File.dirname(__FILE__))
 root = File.join(here, '..')
 outdir = File.join(root, 'pandoc')
