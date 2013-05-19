@@ -37,10 +37,8 @@ def pre_markdown(string)
     
     # Delete <div> block
     s /<div class="single">(.*?)<\/div>/m do
-      t = "---\n" << $1 << "---\n" 
+      t = "---\n" << $1.gsub(/<\/?h3>/, '**').gsub(/<\/?p>/, "\n") << "---\n" 
     end
-
-    s(/<\/?h3>/, '**').gsub!(/<\/?p>/, "\n")
 
     # Remove html table
     s /<table ?.*?>(.*?)<\/table>/m do
